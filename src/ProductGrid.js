@@ -1,7 +1,6 @@
 import React from 'react';
 
 function ProductGrid({data, updateBlock, updateQty, addCart}) {
-  console.log('product grid: ', data);
   // let products = data.site.products.edges;
   return (
     <ul className="collection-grid">

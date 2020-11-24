@@ -12,7 +12,6 @@ export async function getSku(productId, optionsList) {
 
   return new Promise((resolve) => {
     utils.api.productAttributes.optionChange(productId, formSerialized, [], (err, response) => {
-      console.log(response);
       const productAttr = {
         sku: response.data.sku,
         stock: response.data.stock,
