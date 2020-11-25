@@ -6,7 +6,7 @@ function ProductGrid({data, updateBlock, updateQty, addCart}) {
     <ul className="collection-grid">
       {data ? data.map((prod) => {
         return (
-          <li key={prod.key}>
+          <li className="collection-item" key={prod.key}>
             <div className="collection-img">
               <a href={prod.url}><img src={prod.image} /></a>
             </div>
@@ -30,15 +30,17 @@ function ProductGrid({data, updateBlock, updateQty, addCart}) {
                   </div>
                 );
               })}
-              <input type="number" value={prod.qty} onChange={(evt) => updateQty(prod.id, evt.target.value)}/>
-              <button className="button" onClick={(evt) => addCart(prod.key, prod.sku, prod.qty)} disabled={prod.adding}>{prod.adding ? 'Adding To Cart' : 'Add To Cart'}</button>
-              {prod.addedToCart ?
-                  <span className="checkmark">
-                    <div className="checkmark_circle"></div>
-                    <div className="checkmark_stem"></div>
-                    <div className="checkmark_kick"></div>
-                  </span>
-              : ''}
+              <div className="collection-item--action">
+                <input type="number" value={prod.qty} onChange={(evt) => updateQty(prod.id, evt.target.value)}/>
+                <button className="button" onClick={(evt) => addCart(prod.key, prod.sku, prod.qty)} disabled={prod.adding}>{prod.adding ? 'Adding To Cart' : 'Add To Cart'}</button>
+                {prod.addedToCart ?
+                    <span className="checkmark">
+                      <div className="checkmark_circle"></div>
+                      <div className="checkmark_stem"></div>
+                      <div className="checkmark_kick"></div>
+                    </span>
+                : ''}
+              </div>
             </div>
           </li>
         )
