@@ -25,74 +25,48 @@ function App({token, productIds}) {
       });
   }, []);
 
-  async function updateOption(key, label, value) {
-    const newProductGrid = productGrid.map((product) => {
-      if (product.key === key) {
-        // update the selected option
-        let newOptionList = product.options.map((option) => {
-          if (option.label === label) {
-            const newOption = {
-              ...option,
-              selected: value
-            };
-            return newOption;
-          }
-          return option;
-        });
-        return {
-          ...product,
-          options: newOptionList,
-        };
-      }
-      return product;
-    });
-
-    setProductGrid(newProductGrid);
-    return newProductGrid;
-  }
-
-  async function updateAvailable(key, productId, oldProductGrid) {
-    const newProductGrid = await asyncMap(oldProductGrid, async(productBlock) => {
-      const productAttributes = productBlock.key === key ? await getSku(productId, productBlock.options) : null;
+  // async function updateAvailable(key, productId, oldProductGrid) {
+  //   const newProductGrid = await asyncMap(oldProductGrid, async(productBlock) => {
+  //     const productAttributes = productBlock.key === key ? await getSku(productId, productBlock.options) : null;
       
-      if (productAttributes) {
-        const newOption = productBlock.options.map((option) => {
-          const newAttributeList = option.values.map((value) => {
-            let isInStock = true;
-            if (productAttributes.in_stock_attributes !== undefined && productAttributes.in_stock_attributes.indexOf(value.id) < 0) {
-              isInStock = false;
-            }
-            const newAttribute = {
-              ...value,
-              in_stock: isInStock,
-            };
-            return newAttribute;
-          });
-          return {
-            ...option,
-            values: newAttributeList,
-          };
-        });
-        return {
-          ...productBlock,
-          options: newOption,
-          sku: productAttributes.sku,
-          stock: productAttributes.stock,
-          price: productAttributes.price,
-        };
-      } else {
-        return {
-          ...productBlock,
-        };
-      }
-    });
-    setProductGrid(newProductGrid);
-  }
+  //     if (productAttributes) {
+  //       const newOption = productBlock.options.map((option) => {
+  //         const newAttributeList = option.values.map((value) => {
+  //           let isInStock = true;
+  //           if (productAttributes.in_stock_attributes !== undefined && productAttributes.in_stock_attributes.indexOf(value.id) < 0) {
+  //             isInStock = false;
+  //           }
+  //           const newAttribute = {
+  //             ...value,
+  //             in_stock: isInStock,
+  //           };
+  //           return newAttribute;
+  //         });
+  //         return {
+  //           ...option,
+  //           values: newAttributeList,
+  //         };
+  //       });
+  //       return {
+  //         ...productBlock,
+  //         options: newOption,
+  //         sku: productAttributes.sku,
+  //         stock: productAttributes.stock,
+  //         price: productAttributes.price,
+  //       };
+  //     } else {
+  //       return {
+  //         ...productBlock,
+  //       };
+  //     }
+  //   });
+  //   setProductGrid(newProductGrid);
+  // }
 
-  async function updateBlock(key, productId, label, value) {
-    const newProductGrid = await updateOption(key, label, value);
-    updateAvailable(key, productId, newProductGrid);
-  }
+  // async function updateBlock(key, productId, label, value) {
+  //   // const newProductGrid = await updateOption(key, label, value);
+  //   updateAvailable(key, productId, newProductGrid);
+  // }
 
   async function addCart(key, sku, qty) {
     if (sku) {
@@ -144,7 +118,7 @@ function App({token, productIds}) {
 
   return (
     <div className="App">
-      <ProductGrid data={productGrid} updateBlock={updateBlock} updateQty={updateQty} addCart={addCart} />
+      <ProductGrid data={productGrid} updateQty={updateQty} />
     </div>
   );
 }

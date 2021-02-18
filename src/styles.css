@@ -43,6 +43,8 @@
     text-align: center;
 }
 
+.collection-item--action .button{margin-right: 15px;}
+
 .collection-grid input::-webkit-outer-spin-button,
 .collection-grid input::-webkit-inner-spin-button {
   -webkit-appearance: none;
